@@ -5,7 +5,6 @@ import sys
 import json
 import csv
 from faker import Faker
-import random
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -147,6 +146,8 @@ def process_json_file(input_file, output_file, replacer):
     try:
         with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
             data = json.load(infile)
+            # Keys are left alone on purpose: they are field names shared
+            # with the schema the file feeds, while values carry the data.
             def sanitize_json(obj):
                 if isinstance(obj, str):
                     return replacer.replace_patterns(obj)
@@ -176,6 +177,14 @@ def main():
     """
     parser = setup_argparse()
     args = parser.parse_args()
+
+    # There is no format conversion in this tool: the reader and writer are
+    # chosen by input_format alone. Accepting a different output_format
+    # silently wrote text into a .json file (or the reverse), so refuse the
+    # pair instead of producing a mislabeled output file.
+    if args.input_format != args.output_format:
+        logging.error("input_format and output_format must match; conversion is not supported.")
+        sys.exit(1)
 
     try:
         patterns, replacements = load_patterns_from_json(args.patterns_file)
