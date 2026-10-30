@@ -15,9 +15,9 @@ Note: --input_format and --output_format must match. The tool reads and writes i
 - `-h`: Show help message and exit
 - `--patterns_file`: Path to the JSON file containing regex patterns and replacements.
 - `--use_faker`: Use Faker to generate realistic replacement data.
-- `--faker_locale`: No description provided
-- `--input_format`: No description provided
-- `--output_format`: No description provided
+- `--faker_locale`: Locale to use for Faker (default: en_US).
+- `--input_format`: Format of the input file (text, json, or csv).
+- `--output_format`: Must match --input_format; converting between formats is not supported.
 
 ## License
 Copyright (c) ShadowGuardAI
