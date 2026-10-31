@@ -76,7 +76,7 @@ def setup_argparse():
     parser = argparse.ArgumentParser(description='Sanitize data by replacing sensitive patterns.')
     parser.add_argument('input_file', type=str, help='Path to the input file.')
     parser.add_argument('output_file', type=str, help='Path to the output file.')
-    parser.add_argument('--patterns_file', type=str, help='Path to the JSON file containing regex patterns and replacements.', required=True)
+    parser.add_argument('--patterns_file', type=str, help='Path to the JSON file containing regex patterns and replacements. The run exits 1 and writes no output when the file loads no patterns, or when any defined pattern has no replacement entry.', required=True)
     parser.add_argument('--use_faker', action='store_true', help='Use Faker to generate realistic replacement data.')
     parser.add_argument('--faker_locale', type=str, default='en_US', help='Locale to use for Faker (default: en_US).')
     parser.add_argument('--input_format', type=str, choices=['text', 'json', 'csv'], default='text', help='Format of the input file (default: text).')
@@ -188,6 +188,15 @@ def main():
 
     try:
         patterns, replacements = load_patterns_from_json(args.patterns_file)
+        # Validate before any file is processed or written. A run with no
+        # patterns, or with a pattern that has no replacement, would leave
+        # matched data in the output untouched while still reporting the
+        # run as sanitized, so both shapes are failures here.
+        if not patterns:
+            raise ValueError("Patterns file loaded no patterns. Nothing would be replaced, so the run is not a sanitization.")
+        missing_replacements = [name for name in patterns if name not in replacements]
+        if missing_replacements:
+            raise ValueError(f"Patterns file defines no replacement for pattern(s): {', '.join(missing_replacements)}. The run would leave those matches unchanged, so it is not a sanitization.")
         replacer = DataPatternReplacer(patterns, replacements, args.use_faker, args.faker_locale)
 
         if args.input_format == 'text':
