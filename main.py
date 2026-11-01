@@ -45,6 +45,11 @@ class DataPatternReplacer:
             str: The sanitized data.
         """
         try:
+            # Patterns run in the order the JSON file lists them, and
+            # each one works on the text the previous patterns already
+            # rewrote. A replacement string that itself matches a later
+            # pattern is replaced again, so the file author controls
+            # chaining through ordering whether they meant to or not.
             for pattern_name, pattern in self.patterns.items():
                 replacement = self.replacements.get(pattern_name)
                 if replacement is None:
@@ -53,6 +58,11 @@ class DataPatternReplacer:
 
                 if self.use_faker:
                     # Use Faker provider if specified in replacement string
+                    # The lambda calls the provider once per match, so
+                    # the same original value appearing twice gets two
+                    # different replacements. There is no mapping kept,
+                    # unlike a pseudonymization pass: equal inputs do
+                    # not stay equal in the output.
                     if hasattr(self.faker, replacement):
                         data = re.sub(pattern, lambda x: str(getattr(self.faker, replacement)()), data)
                     else:
@@ -124,6 +134,9 @@ def process_csv_file(input_file, output_file, replacer):
         with open(input_file, 'r', newline='') as infile, open(output_file, 'w', newline='') as outfile:
             reader = csv.reader(infile)
             writer = csv.writer(outfile)
+            # No row is treated as a header here: the first row goes
+            # through the same replacement as the data rows, so a
+            # header cell that matches a pattern is rewritten too.
             for row in reader:
                 sanitized_row = [replacer.replace_patterns(field) for field in row]
                 writer.writerow(sanitized_row)
