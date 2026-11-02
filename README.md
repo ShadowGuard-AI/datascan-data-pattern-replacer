@@ -1,3 +1,17 @@
+![Introduction banner: the chart table before any name is spoken](intro-banner.png)
+
+# datascan-data-pattern-replacer
+
+Title block: the name above is set in Cabin Condensed in chart ink on a parchment plate, with a rhumb rule beneath it and one small compass rose at the left of the first heading only, in the manner of a chart title.
+
+![Logo](logo.png)
+
+![Banner](banner.png)
+
+![Animated scene](scene.svg)
+
+![Major separator](sep-heavy.svg)
+
 ![Banner](banner.png)
 
 # datascan-data-pattern-replacer
@@ -23,3 +37,9 @@ Note on failed runs: if the patterns file loads no patterns at all, the run exit
 
 ## License
 Copyright (c) ShadowGuardAI
+
+![Major separator](sep-heavy.svg)
+
+## Chart drawer notes, gathered in the chart room
+
+The buttons of this re-skin read Swap the Matches, Load the Patterns File, and Open the Chart Drawer. Its headings read No Pattern Ships Inside, Formats Do Not Convert, Order in the File Is Order at Work, Equal Inputs Part Under Faker, and Headers Are Swapped Too. Two identity faults stand in the preserved record above and are flagged, not corrected: the install line names ShadowGuardAI without its hyphen, and the licence line reads Copyright (c) ShadowGuardAI in the same unhyphenated form. The repository LICENSE file carries the MIT License. Its holder line gives a pen name together with a single initial for the remaining name. That fact is recorded. The initial is not expanded. No sample record or concrete data value from any example is printed in this re-skin or on the site.

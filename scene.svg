@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <rect width="1200" height="300" fill="#d8c69e"/>
+  <polyline points="0,120 150,100 260,150 360,125 470,190 600,160 700,230 830,200 960,260 1200,220" fill="none" stroke="#78603a" stroke-width="4"/>
+  <g stroke="#96805c" stroke-width="1">
+    <line x1="950" y1="110" x2="200" y2="290"/><line x1="950" y1="110" x2="600" y2="20"/><line x1="950" y1="110" x2="1150" y2="280"/><line x1="950" y1="110" x2="300" y2="40"/>
+  </g>
+  <g>
+    <polygon points="950,40 958,102 950,110 942,102" fill="#94402c"/>
+    <polygon points="950,180 958,118 950,110 942,118" fill="#4a3a26"/>
+    <polygon points="880,110 942,102 950,110 942,118" fill="#4a3a26"/>
+    <polygon points="1020,110 958,102 950,110 958,118" fill="#94402c"/>
+    <circle cx="950" cy="110" r="5" fill="#4a3a26">
+      <animate attributeName="r" values="4;6;4" dur="6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
